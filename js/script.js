@@ -1,0 +1,112 @@
+const calcForm = document.querySelector('.calc__form'),
+    userName = document.querySelector('#name'),
+    userSurname = document.querySelector('#surname'),
+    userPhone = document.querySelector('#phone'),
+    userComment = document.querySelector('#comment'),
+    cargoWidth = document.querySelector('#width'),
+    cargoHeight = document.querySelector('#height'),
+    cargoWeight = document.querySelector('#weight'),
+    calcCargo = document.querySelector('.calc__cargo'),
+    calcWeight = document.querySelector('.calc__weight'),
+    deliveryDate = document.querySelector('#date'),
+    deliveryTime = document.querySelector('#time'),
+    priceSum = document.querySelector('.calc__sum'),
+    calcBtn = document.querySelector('.calc__calc'),
+    submitBtn = document.querySelector('.calc__submit'),
+    resetBtn = document.querySelector('.calc__reset');
+
+const overlay = document.querySelector('.overlay'),
+    modal = document.querySelector('.modal'),
+    modalSubmit = document.querySelector('.modal__submit');
+
+//IMask
+const maskOptions = {
+    mask: '+{7}(000)000-00-00',
+    lazy: false,
+    placeholderChar: '0'
+};
+const mask = IMask(userPhone, maskOptions);
+
+//Cargo pic
+function generateImage(width, height, weight) {
+    width.addEventListener('change', () => {
+        if (width.value > 10) {
+            width.value = 10;
+        }
+        calcCargo.style.width = `${width.value * 10}px`;
+        calcCargo.style.border = '1px solid var(--warning)';
+    });
+    height.addEventListener('change', () => {
+        if (height.value > 10) {
+            height.value = 10;
+        }
+        calcCargo.style.height = `${height.value * 10}px`;
+        calcCargo.style.border = '1px solid var(--warning)';
+    });
+    weight.addEventListener('change', () => {
+        calcWeight.textContent = `${weight.value}кг`;
+    });
+    
+}
+
+generateImage(cargoWidth, cargoHeight, cargoWeight);
+
+//Calculating price
+
+function calculatePrice(width, height, weight) {
+    let price = (Math.round(width.value) * 1000) + (Math.round(height.value) * 1200);
+    if (weight.value > 250) {
+        price += 3500;
+    }
+    priceSum.innerHTML = `
+                          <p class="calc__result">
+                              ${price} рублей
+                          </p>
+                          `;
+}
+
+calcBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+})
+
+resetBtn.addEventListener('click', () => {
+  priceSum.innerHTML = '';
+  calcWeight.textContent = '';
+  calcCargo.style.width = 0;
+  calcCargo.style.height = 0;
+  calcCargo.style.border = 'none';
+});
+
+//Modal
+
+submitBtn.addEventListener('click', (e) => {
+    if (userName.value && userSurname.value && userPhone.value && cargoWidth.value && cargoHeight.value) {
+        e.preventDefault();
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+        modal.innerHTML = `
+              <span class="modal__close">&#10008;</span>
+              <h2 class="title">Детали заказа:</h2>
+              <p class="modal__name">Имя отправителя: <span>${userName.value}</span></p>
+              <p class="modal__surname">Фамилия отправителя: <span>${userSurname.value}</span></p>
+              <p class="modal__phone">Телефон отправителя: <span>${userPhone.value}</span></p>
+              <p class="modal__comment">Комментарий: <span>${userComment.value}</span></p>
+              <p class="modal__width">Ширина груза: <span>${cargoWidth.value}м.</span></p>
+              <p class="modal__height">Высота груза: <span>${cargoHeight.value}м.</span></p>
+              <p class="modal__date">Дата доставки: <span>${deliveryDate.value}</p>
+              <p class="modal__time">Время доставки: <span>${deliveryTime.value}</span></p>
+              <p class="modal__price">Стоимость доставки: <span>${document.querySelector('.calc__result').textContent} рублей</span></p>
+              <button class="btn modal__submit">Подтвердить</button>
+          `;
+        overlay.style.display = 'block';
+    }
+});
+const modalClose = document.querySelector('.modal__close');
+overlay.addEventListener('click', (e) => {
+  if(e.target === overlay || e.target === modalClose || e.target === modalSubmit){
+    modalClose.addEventListener('click', () => {
+      overlay.style.display = "none";
+    });
+  }
+  overlay.style.display = 'none';
+})
