@@ -1,4 +1,7 @@
+ 
+
 const calcForm = document.querySelector('.calc__form'),
+    cityChoice = document.querySelector('#city'),
     userName = document.querySelector('#name'),
     userSurname = document.querySelector('#surname'),
     userPhone = document.querySelector('#phone'),
@@ -18,6 +21,23 @@ const calcForm = document.querySelector('.calc__form'),
 const overlay = document.querySelector('.overlay'),
     modal = document.querySelector('.modal'),
     modalSubmit = document.querySelector('.modal__submit');
+//Select city 
+fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian-cities.json")
+.then(response => {
+	return response.json();
+
+})
+.then(json => {
+    json.forEach((item) => {
+        console.log(item)
+        let option = document.createElement('option');
+        option.textContent = item.name;
+        cityChoice.append(option);
+    })
+})
+.catch(err => {
+	console.error(err);
+});
 
 //IMask
 const maskOptions = {
@@ -46,7 +66,7 @@ function generateImage(width, height, weight) {
     weight.addEventListener('change', () => {
         calcWeight.textContent = `${weight.value}кг`;
     });
-    
+
 }
 
 generateImage(cargoWidth, cargoHeight, cargoWeight);
@@ -59,9 +79,9 @@ function calculatePrice(width, height, weight) {
         price += 3500;
     }
     priceSum.innerHTML = `
-                          <p class="calc__result">
+                          <option class="calc__result">
                               ${price} рублей
-                          </p>
+                          </option>
                           `;
 }
 
@@ -70,12 +90,13 @@ calcBtn.addEventListener('click', (e) => {
     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
 })
 
+// Reset
 resetBtn.addEventListener('click', () => {
-  priceSum.innerHTML = '';
-  calcWeight.textContent = '';
-  calcCargo.style.width = 0;
-  calcCargo.style.height = 0;
-  calcCargo.style.border = 'none';
+    priceSum.innerHTML = '';
+    calcWeight.textContent = '';
+    calcCargo.style.width = 0;
+    calcCargo.style.height = 0;
+    calcCargo.style.border = 'none';
 });
 
 //Modal
@@ -95,7 +116,7 @@ submitBtn.addEventListener('click', (e) => {
               <p class="modal__height">Высота груза: <span>${cargoHeight.value}м.</span></p>
               <p class="modal__date">Дата доставки: <span>${deliveryDate.value}</p>
               <p class="modal__time">Время доставки: <span>${deliveryTime.value}</span></p>
-              <p class="modal__price">Стоимость доставки: <span>${document.querySelector('.calc__result').textContent} рублей</span></p>
+              <p class="modal__price">Стоимость доставки: <span>${document.querySelector('.calc__result').textContent}</span></p>
               <button class="btn modal__submit">Подтвердить</button>
           `;
         overlay.style.display = 'block';
@@ -103,10 +124,10 @@ submitBtn.addEventListener('click', (e) => {
 });
 const modalClose = document.querySelector('.modal__close');
 overlay.addEventListener('click', (e) => {
-  if(e.target === overlay || e.target === modalClose || e.target === modalSubmit){
-    modalClose.addEventListener('click', () => {
-      overlay.style.display = "none";
-    });
-  }
-  overlay.style.display = 'none';
+    if (e.target === overlay || e.target === modalClose || e.target === modalSubmit) {
+        modalClose.addEventListener('click', () => {
+            overlay.style.display = "none";
+        });
+    }
+    overlay.style.display = 'none';
 })
