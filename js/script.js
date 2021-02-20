@@ -20,29 +20,29 @@ const overlay = document.querySelector('.overlay'),
     modal = document.querySelector('.modal'),
     modalSubmit = document.querySelector('.modal__submit');
 
-    //Select city 
+//Select city 
 fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian-cities.json")
-.then(response => {
-    return response.json();
-})
-.then(json => {
-    json.forEach((item) => {
-        let option = document.createElement('option');
-        option.textContent = item.name;
-        option.setAttribute('value', item.name);
-        cityChoice.append(option);
-    });
-    //Choises
-    const choices = new Choices(cityChoice, {
-        searchEnabled: true,
-        searchChoices: true,
-        noResultsText: 'Ничего не найдено',
-        itemSelectText: 'Выбрать'
+    .then(response => {
+        return response.json();
+    })
+    .then(json => {
+        json.forEach((item) => {
+            let option = document.createElement('option');
+            option.textContent = item.name;
+            option.setAttribute('value', item.name);
+            cityChoice.append(option);
         });
-})
-.catch(err => {
+        //Choises
+        const choices = new Choices(cityChoice, {
+            searchEnabled: true,
+            searchChoices: true,
+            noResultsText: 'Ничего не найдено',
+            itemSelectText: 'Выбрать'
+        });
+    })
+    .catch(err => {
         console.error(err);
-});
+    });
 
 //IMask
 const maskOptions = {
@@ -56,7 +56,7 @@ const mask = IMask(userPhone, maskOptions);
 //Cargo pic
 function generateImage(width, height, weight) {
     width.addEventListener('change', () => {
-        
+
         if (width.value > 10) {
             width.value = 10;
         }
@@ -89,7 +89,7 @@ function calculatePrice(width, height, weight) {
         price += 3500;
     }
     //Price dependence about the region. Add cases for regions :)
-    switch(cityChoice.value) {
+    switch (cityChoice.value) {
         case 'Москва':
             price += 5000;
             break;
@@ -110,7 +110,7 @@ function calculatePrice(width, height, weight) {
                           </p>
                           `;
 }
-cityChoice.addEventListener('change', () =>{
+cityChoice.addEventListener('change', () => {
     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
 });
 
@@ -129,11 +129,11 @@ const picker = new Pikaday({
     firstDay: 1,
     minDate: date.addDays(3),
     i18n: {
-        previousMonth : 'Прредыдущий месяц',
-        nextMonth     : 'Следующий месяц',
-        months        : ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Авнуст','Сентябрь','Октябрь','Ноябрь','Декабрь'],
-        weekdays      : ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
-        weekdaysShort : ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+        previousMonth: 'Прредыдущий месяц',
+        nextMonth: 'Следующий месяц',
+        months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авнуст', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        weekdays: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+        weekdaysShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
     }
 });
 
@@ -150,7 +150,7 @@ resetBtn.addEventListener('click', () => {
 //Modal
 
 submitBtn.addEventListener('click', (e) => {
-    if (userName.value && userSurname.value && userPhone.value && cargoWidth.value && cargoHeight.value) {
+    if (userName.value && userSurname.value && userPhone.value && cargoWidth.value && cargoHeight.value && deliveryDate.value && cityChoice.value) {
         e.preventDefault();
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
         modal.innerHTML = `
@@ -179,5 +179,3 @@ overlay.addEventListener('click', (e) => {
     }
     overlay.style.display = 'none';
 })
-
-
