@@ -1,6 +1,8 @@
 :root {
   --neutral: #09101d;
   --default: #0b5fff;
+  --hover: #0053F0;
+  --active: #004AD7;
   --warning: #b95000;
 }
 
@@ -31,11 +33,17 @@ body {
   color: #fff;
   font-size: 10px;
   font-weight: 600;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border: none; 
-  border-radius: 8px;
+  border-radius: 4px;
   outline: transparent;
   cursor: pointer;
+}
+.btn:hover{
+  background: var(--hover);
+}
+.btn:active{
+  background: var(--active);
 }
 .calc__form {
   padding: 20px;
@@ -126,6 +134,12 @@ textarea {
   color: var(--warning);
 }
 
+.calc__btns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .overlay {
   display: none;
   position: fixed;
@@ -162,4 +176,27 @@ textarea {
   top: 15px;
   right: 15px;
   cursor: pointer;
+}
+
+.modal__submit {
+  margin-top: 20px;
+}
+
+/* Choices custom */
+.choices__inner,
+.is-focused .choices__inner {
+  border: 1px solid var(--default);
+  border-radius: 8px;
+}
+
+.is-open .choices__inner {
+  border: 1px solid var(--default);
+  border-radius: 8px 8px 0 0;
+}
+
+.choices[data-type*=select-one]:after{
+  border-color: var(--neutral) transparent transparent;
+}
+.choices[data-type*=select-one].is-open:after{
+  border-color: transparent transparent var(--nautral);
 }

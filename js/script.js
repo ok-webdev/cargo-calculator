@@ -1,7 +1,5 @@
- 
-
 const calcForm = document.querySelector('.calc__form'),
-    cityChoice = document.querySelector('#city'),
+    cityChoice = document.querySelector('.calc__city-choice'),
     userName = document.querySelector('#name'),
     userSurname = document.querySelector('#surname'),
     userPhone = document.querySelector('#phone'),
@@ -21,23 +19,31 @@ const calcForm = document.querySelector('.calc__form'),
 const overlay = document.querySelector('.overlay'),
     modal = document.querySelector('.modal'),
     modalSubmit = document.querySelector('.modal__submit');
-//Select city 
+
+    //Select city 
 fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian-cities.json")
 .then(response => {
-	return response.json();
-
+    return response.json();
 })
 .then(json => {
     json.forEach((item) => {
         console.log(item)
         let option = document.createElement('option');
         option.textContent = item.name;
+        option.setAttribute('value', item.name);
         cityChoice.append(option);
-    })
+    });
+    //Choises
+    const choices = new Choices(cityChoice, {
+        searchEnabled: true,
+        searchChoices: true,
+        });
 })
 .catch(err => {
 	console.error(err);
 });
+
+
 
 //IMask
 const maskOptions = {
@@ -55,6 +61,7 @@ function generateImage(width, height, weight) {
         }
         calcCargo.style.width = `${width.value * 10}px`;
         calcCargo.style.border = '1px solid var(--warning)';
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
     height.addEventListener('change', () => {
         if (height.value > 10) {
@@ -62,9 +69,11 @@ function generateImage(width, height, weight) {
         }
         calcCargo.style.height = `${height.value * 10}px`;
         calcCargo.style.border = '1px solid var(--warning)';
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
     weight.addEventListener('change', () => {
         calcWeight.textContent = `${weight.value}кг`;
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
 
 }
@@ -78,17 +87,35 @@ function calculatePrice(width, height, weight) {
     if (weight.value > 250) {
         price += 3500;
     }
+    //Price dependence about the region. Add cases for regions :)
+    switch(cityChoice.value) {
+        case 'Москва':
+            price += 5000;
+            break;
+        case 'Санкт-Петербург':
+            price += 3000;
+            break;
+        case 'Владивосток':
+            price += 15000;
+            break;
+        default:
+            price = price;
+    }
+    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
     priceSum.innerHTML = `
-                          <option class="calc__result">
+                          <p class="calc__result">
                               ${price} рублей
-                          </option>
+                          </p>
                           `;
 }
-
-calcBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+cityChoice.addEventListener('change', () =>{
     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
-})
+});
+// calcBtn.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+// })
 
 // Reset
 resetBtn.addEventListener('click', () => {
@@ -108,6 +135,7 @@ submitBtn.addEventListener('click', (e) => {
         modal.innerHTML = `
               <span class="modal__close">&#10008;</span>
               <h2 class="title">Детали заказа:</h2>
+              <p class="modal__name">Желаемый регион: <span>${cityChoice.value}</span></p>
               <p class="modal__name">Имя отправителя: <span>${userName.value}</span></p>
               <p class="modal__surname">Фамилия отправителя: <span>${userSurname.value}</span></p>
               <p class="modal__phone">Телефон отправителя: <span>${userPhone.value}</span></p>
@@ -131,3 +159,4 @@ overlay.addEventListener('click', (e) => {
     }
     overlay.style.display = 'none';
 })
+

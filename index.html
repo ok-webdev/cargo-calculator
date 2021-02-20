@@ -1,92 +1,111 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Расчёт стоимости</title>
-  <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="css/rSlider.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Расчёт стоимости</title>
+    <!-- <link rel="stylesheet" href="css/base.min.css"> -->
+    <link rel="stylesheet" href="css/choices.min.css">
+    <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
       <form action="#" name="calculate" class="calc__form" method="POST">
         <fieldset class="calc__region">
           <legend>Желаемый регион</legend>
-          <select name="city" id="city">
-
+          <select name="city" id="city" class="calc__city-choice">
+            <option value=""></option>
           </select>
         </fieldset>
         <fieldset class="calc__contact">
           <legend>Контактная информация</legend>
           <label for="name">
             <span class="required">Имя</span>
-            <input type="text" id="name" name="name" placeholder="Введите имя" required>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Введите имя"
+              required
+            />
           </label>
           <label for="surname">
             <span class="required">Фамилия</span>
-            <input type="text" id="surname" name="surname" placeholder="Введите фамилию" required>
+            <input
+              type="text"
+              id="surname"
+              name="surname"
+              placeholder="Введите фамилию"
+              required
+            />
           </label>
           <label for="phone">
             <span class="required">Телефон</span>
-            <input type="tel" id="phone" name="phone" required>
+            <input type="tel" id="phone" name="phone" required />
           </label>
           <label for="comment">
             <span>Комментарий</span>
-            <textarea name="comment" id="comment" rows="3" ></textarea>
+            <textarea name="comment" id="comment" rows="3"></textarea>
           </label>
-          
         </fieldset>
         <fieldset class="calc__size">
           <legend>Габариты</legend>
           <label for="width">
             <span class="required">Ширина(м)</span>
-            <input type="number" id="width" name="width" placeholder="Максимальное значение 10м" required>
+            <input
+              type="number"
+              id="width"
+              name="width"
+              placeholder="Максимальное значение 10м"
+              required
+            />
           </label>
           <label for="height">
             <span class="required">Высота(м)</span>
-            <input type="number" id="height" name="height" placeholder="Максимальное значение 10м" required>
+            <input
+              type="number"
+              id="height"
+              name="height"
+              placeholder="Максимальное значение 10м"
+              required
+            />
           </label>
           <label for="weight">
             <span class="required">Вес(кг)</span>
-            <input type="number" id="weight" name="weight" required>
+            <input type="number" id="weight" name="weight" required />
           </label>
-          
         </fieldset>
         <fieldset class="calc__dimensions">
           <legend>Груз</legend>
           <div class="calc__cargo">
-            <p class="calc__weight">
-
-            </p>
+            <p class="calc__weight"></p>
           </div>
         </fieldset>
         <fieldset class="calc__delivery">
           <legend>Доставка</legend>
-          <input type="date" id="date" name="date">
-          <input type="time" id="time" name="time">
+          <input type="date" id="date" name="date" />
+          <input type="time" id="time" name="time" />
         </fieldset>
         <fieldset>
           <legend>Стоимость доставки</legend>
-          <div class="calc__sum">
-          
-          </div>
+          <div class="calc__sum"></div>
         </fieldset>
-        <button class="btn calc__calc">Рассчитать</button>
-        <button class="btn calc__submit">Оформить заказ</button>
-        <button type="reset" class="btn calc__reset">Сбросить</button>
+        <fieldset class="calc__btns">
+          <!-- <button class="btn calc__calc">Рассчитать</button> -->
+          <button class="btn calc__submit">Оформить заказ</button>
+          <button type="reset" class="btn calc__reset">Сбросить</button>
+        </fieldset>
       </form>
       <!-- /.calculate__form -->
-  </div>
-  <!-- /.container -->
-  <div class="overlay">
-    <div class="modal">
-      
     </div>
-  </div>
-  <script src="js/imask.js"></script>
-  <script src="js/rSlider.min.js"></script>
-  <script src="js/script.js"></script>
-</body>
+    <!-- /.container -->
+    <div class="overlay">
+      <div class="modal"></div>
+    </div>
+    <script src="js/choices.min.js"></script>
+    <script src="js/imask.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
