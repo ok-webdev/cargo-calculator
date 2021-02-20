@@ -10,7 +10,7 @@ const calcForm = document.querySelector('.calc__form'),
     calcCargo = document.querySelector('.calc__cargo'),
     calcWeight = document.querySelector('.calc__weight'),
     deliveryDate = document.querySelector('#date'),
-    deliveryTime = document.querySelector('#time'),
+    // deliveryTime = document.querySelector('#time'),
     priceSum = document.querySelector('.calc__sum'),
     calcBtn = document.querySelector('.calc__calc'),
     submitBtn = document.querySelector('.calc__submit'),
@@ -27,7 +27,6 @@ fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian
 })
 .then(json => {
     json.forEach((item) => {
-        console.log(item)
         let option = document.createElement('option');
         option.textContent = item.name;
         option.setAttribute('value', item.name);
@@ -42,10 +41,8 @@ fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian
         });
 })
 .catch(err => {
-	console.error(err);
+        console.error(err);
 });
-
-
 
 //IMask
 const maskOptions = {
@@ -55,9 +52,11 @@ const maskOptions = {
 };
 const mask = IMask(userPhone, maskOptions);
 
+
 //Cargo pic
 function generateImage(width, height, weight) {
     width.addEventListener('change', () => {
+        
         if (width.value > 10) {
             width.value = 10;
         }
@@ -114,10 +113,30 @@ function calculatePrice(width, height, weight) {
 cityChoice.addEventListener('change', () =>{
     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
 });
-// calcBtn.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     calculatePrice(cargoWidth, cargoHeight, cargoWeight);
-// })
+
+//Date
+Date.prototype.addDays = function(days) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+let date = new Date();
+
+const picker = new Pikaday({
+    field: deliveryDate,
+    format: 'DD/MM/YYYY',
+    firstDay: 1,
+    minDate: date.addDays(3),
+    i18n: {
+        previousMonth : 'Прредыдущий месяц',
+        nextMonth     : 'Следующий месяц',
+        months        : ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Авнуст','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+        weekdays      : ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'],
+        weekdaysShort : ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+    }
+});
+
 
 // Reset
 resetBtn.addEventListener('click', () => {
@@ -144,8 +163,7 @@ submitBtn.addEventListener('click', (e) => {
               <p class="modal__comment">Комментарий: <span>${userComment.value}</span></p>
               <p class="modal__width">Ширина груза: <span>${cargoWidth.value}м.</span></p>
               <p class="modal__height">Высота груза: <span>${cargoHeight.value}м.</span></p>
-              <p class="modal__date">Дата доставки: <span>${deliveryDate.value}</p>
-              <p class="modal__time">Время доставки: <span>${deliveryTime.value}</span></p>
+              <p class="modal__date">Дата и время доставки: <span>${deliveryDate.value}</p>
               <p class="modal__price">Стоимость доставки: <span>${document.querySelector('.calc__result').textContent}</span></p>
               <button class="btn modal__submit">Подтвердить</button>
           `;
@@ -161,4 +179,5 @@ overlay.addEventListener('click', (e) => {
     }
     overlay.style.display = 'none';
 })
+
 

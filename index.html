@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Расчёт стоимости</title>
-    <!-- <link rel="stylesheet" href="css/base.min.css"> -->
+    <link rel="stylesheet" href="css/pikaday.css">
     <link rel="stylesheet" href="css/choices.min.css">
     <link rel="stylesheet" href="css/fonts.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -85,15 +85,16 @@
         </fieldset>
         <fieldset class="calc__delivery">
           <legend>Доставка</legend>
-          <input type="date" id="date" name="date" />
-          <input type="time" id="time" name="time" />
+        <label for="date">
+          <span class="required">Дата</span>
+          <input type="text" id="date" name="date" class="datepicker-here" data-position="right top" required/>
+        </label>
         </fieldset>
         <fieldset>
           <legend>Стоимость доставки</legend>
           <div class="calc__sum"></div>
         </fieldset>
         <fieldset class="calc__btns">
-          <!-- <button class="btn calc__calc">Рассчитать</button> -->
           <button class="btn calc__submit">Оформить заказ</button>
           <button type="reset" class="btn calc__reset">Сбросить</button>
         </fieldset>
@@ -104,6 +105,7 @@
     <div class="overlay">
       <div class="modal"></div>
     </div>
+    <script src="js/pikaday.js"></script>
     <script src="js/choices.min.js"></script>
     <script src="js/imask.js"></script>
     <script src="js/script.js"></script>
