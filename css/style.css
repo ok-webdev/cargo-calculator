@@ -185,6 +185,7 @@ textarea {
 /* Choices custom */
 .choices__inner,
 .is-focused .choices__inner {
+  background: #fff;
   border: 1px solid var(--default);
   border-radius: 8px;
 }
@@ -198,5 +199,11 @@ textarea {
   border-color: var(--neutral) transparent transparent;
 }
 .choices[data-type*=select-one].is-open:after{
-  border-color: transparent transparent var(--nautral);
+  border-color: transparent transparent var(--neutral);
+}
+
+.choices__item {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--neutral);
 }

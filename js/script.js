@@ -37,6 +37,8 @@ fetch("https://raw.githubusercontent.com/pensnarik/russian-cities/master/russian
     const choices = new Choices(cityChoice, {
         searchEnabled: true,
         searchChoices: true,
+        noResultsText: 'Ничего не найдено',
+        itemSelectText: 'Выбрать'
         });
 })
 .catch(err => {
