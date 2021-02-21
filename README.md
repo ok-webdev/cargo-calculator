@@ -5,8 +5,7 @@
 - Pure JavaScript +
   - iMask.js
   - Choices.js
+  - Pikaday.js
 
 
-
-
-[GH-Pages]() 
+[GH-Pages](https://ok-webdev.github.io/cargo-calculator/) 
