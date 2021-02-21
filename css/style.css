@@ -64,7 +64,7 @@ label {
     position: relative;
     border: 1px solid var(--default);
     border-radius: 8px;
-    padding: 5px;
+    padding: 10px;
 }
 
 label:not(:first-of-type) {
@@ -98,7 +98,11 @@ input {
     font-size: 14px;
     font-weight: 400;
 }
-
+.range-width,
+.range-height,
+.range-weight {
+    margin-top: 10px;
+}
 textarea {
     resize: none;
     width: 100%;

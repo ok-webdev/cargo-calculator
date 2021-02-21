@@ -1,3 +1,4 @@
+//Elements
 const calcForm = document.querySelector('.calc__form'),
     cityChoice = document.querySelector('.calc__city-choice'),
     userName = document.querySelector('#name'),
@@ -5,17 +6,19 @@ const calcForm = document.querySelector('.calc__form'),
     userPhone = document.querySelector('#phone'),
     userComment = document.querySelector('#comment'),
     cargoWidth = document.querySelector('#width'),
+    cargoWidthRange = document.querySelector('.range-width'),
     cargoHeight = document.querySelector('#height'),
+    cargoHeightRange = document.querySelector('.range-height'),
     cargoWeight = document.querySelector('#weight'),
+    cargoWeightRange = document.querySelector('.range-weight'),
     calcCargo = document.querySelector('.calc__cargo'),
     calcWeight = document.querySelector('.calc__weight'),
     deliveryDate = document.querySelector('#date'),
-    // deliveryTime = document.querySelector('#time'),
     priceSum = document.querySelector('.calc__sum'),
     calcBtn = document.querySelector('.calc__calc'),
     submitBtn = document.querySelector('.calc__submit'),
     resetBtn = document.querySelector('.calc__reset');
-
+//Modal elements
 const overlay = document.querySelector('.overlay'),
     modal = document.querySelector('.modal'),
     modalSubmit = document.querySelector('.modal__submit');
@@ -51,12 +54,24 @@ const maskOptions = {
     placeholderChar: '0'
 };
 const mask = IMask(userPhone, maskOptions);
-
+//Range 
+function calculateRange (input, range) {
+    input.addEventListener('input', () => {
+        range.value = input.value;
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+    });
+    range.addEventListener('input', () => {
+        input.value = range.value;
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+    });
+}
+calculateRange(cargoWidth, cargoWidthRange);
+calculateRange(cargoHeight, cargoHeightRange);
+calculateRange(cargoWeight, cargoWeightRange);
 
 //Cargo pic
-function generateImage(width, height, weight) {
-    width.addEventListener('change', () => {
-
+function generateImage(width, height, weight, widthRange, heightRange, weightRange) {
+    width.addEventListener('input', () => {
         if (width.value > 10) {
             width.value = 10;
         }
@@ -64,7 +79,12 @@ function generateImage(width, height, weight) {
         calcCargo.style.border = '1px solid var(--warning)';
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
-    height.addEventListener('change', () => {
+    widthRange.addEventListener('input', () => {
+        calcCargo.style.width = `${width.value * 10}px`;
+        calcCargo.style.border = '1px solid var(--warning)';
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+    });
+    height.addEventListener('input', () => {
         if (height.value > 10) {
             height.value = 10;
         }
@@ -72,14 +92,25 @@ function generateImage(width, height, weight) {
         calcCargo.style.border = '1px solid var(--warning)';
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
-    weight.addEventListener('change', () => {
-        calcWeight.textContent = `${weight.value}кг`;
+    heightRange.addEventListener('input', () => {
+        calcCargo.style.height = `${height.value * 10}px`;
+        calcCargo.style.border = '1px solid var(--warning)';
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
-
+    weight.addEventListener('input', () => {
+        if(weight.value > 1000) {
+            weight.value = 1000;
+        }
+        calcWeight.textContent = `${weight.value} кг.`;
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+    });
+    weightRange.addEventListener('input', () => {
+        calcWeight.textContent = `${weight.value} кг.`;
+        calculatePrice(cargoWidth, cargoHeight, cargoWeight);
+    });
 }
 
-generateImage(cargoWidth, cargoHeight, cargoWeight);
+generateImage(cargoWidth, cargoHeight, cargoWeight, cargoWidthRange, cargoHeightRange, cargoWeightRange);
 
 //Calculating price
 
@@ -150,7 +181,7 @@ resetBtn.addEventListener('click', () => {
 //Modal
 
 submitBtn.addEventListener('click', (e) => {
-    if (userName.value && userSurname.value && userPhone.value && cargoWidth.value && cargoHeight.value && deliveryDate.value && cityChoice.value) {
+    if (userName.value && userSurname.value && userPhone.value && cargoWidth.value && cargoHeight.value && deliveryDate.value) {
         e.preventDefault();
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
         modal.innerHTML = `
