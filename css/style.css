@@ -98,11 +98,13 @@ input {
     font-size: 14px;
     font-weight: 400;
 }
+
 .range-width,
 .range-height,
 .range-weight {
     margin-top: 10px;
 }
+
 textarea {
     resize: none;
     width: 100%;

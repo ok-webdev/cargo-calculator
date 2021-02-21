@@ -55,7 +55,7 @@ const maskOptions = {
 };
 const mask = IMask(userPhone, maskOptions);
 //Range 
-function calculateRange (input, range) {
+function calculateRange(input, range) {
     input.addEventListener('input', () => {
         range.value = input.value;
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
@@ -98,7 +98,7 @@ function generateImage(width, height, weight, widthRange, heightRange, weightRan
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
     weight.addEventListener('input', () => {
-        if(weight.value > 1000) {
+        if (weight.value > 1000) {
             weight.value = 1000;
         }
         calcWeight.textContent = `${weight.value} кг.`;
