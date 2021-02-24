@@ -101,6 +101,9 @@ function generateImage(width, height, weight, widthRange, heightRange, weightRan
         if (weight.value > 1000) {
             weight.value = 1000;
         }
+        if (weight.value < 0) {
+            weight.value = 0;
+        }
         calcWeight.textContent = `${weight.value} кг.`;
         calculatePrice(cargoWidth, cargoHeight, cargoWeight);
     });
