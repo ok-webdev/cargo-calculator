@@ -172,6 +172,7 @@ textarea {
 }
 
 .modal {
+    width: 300px;
     background: #fff;
     position: absolute;
     top: 50%;
